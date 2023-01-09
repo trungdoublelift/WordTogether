@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "wordtogether-c49c6": {
+      "hosting": {
+        "WordTogether": [
+          "wordtogether-c49c6"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "wordtogether-c49c6"
+  }
+}
