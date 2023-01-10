@@ -7,6 +7,7 @@ export const environment={
     authDomain: 'wordtogether-c49c6.firebaseapp.com',
     messagingSenderId: '721931056090',
   },
+  apiURL:'http://localhost:3000/',
   production:false,
 
 }

@@ -17,6 +17,8 @@ import { authReducer } from 'src/ngrx/reducers/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from 'src/ngrx/effects/auth.effect';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DocumentEffects } from 'src/ngrx/effects/document.effect';
+import { documentReducer } from 'src/ngrx/reducers/document.reducer';
 
 
 @NgModule({
@@ -32,10 +34,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     StoreModule.forRoot({
-      auth:authReducer
+      auth:authReducer,
+      document:documentReducer
     }, {}),
     EffectsModule.forRoot([
       AuthEffects,
+      DocumentEffects,
     ]),
     BrowserAnimationsModule
   ],
