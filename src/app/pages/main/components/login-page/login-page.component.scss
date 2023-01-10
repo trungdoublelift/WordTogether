@@ -1,0 +1,82 @@
+.page-container{
+  background-color: var(--main-color);
+  height:100vh;
+}
+
+.container{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+}
+.image-container{
+  display:flex;
+  justify-content: center;
+
+}
+.project-container{
+  display:flex;
+  flex-direction: column;
+}
+.login-container{
+  position: relative;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin:0 5% 0 0;
+  padding:5% 15% 5% 15%;
+
+}
+.login-title{
+  font-size:2.2em;
+  font-weight: 700;
+  margin-bottom: 5%;
+}
+.input-field{
+  width: 100%;
+}
+.left,.right{
+  display:flex;
+  flex-direction: column;
+  height:100vh;
+  justify-content: center;
+}
+.logo{
+  max-width: 150px;
+  max-height: 150px;
+}
+.project-title{
+  color:white;
+  font-size:4em;
+  font-weight: 700;
+  text-align: center;
+}
+.project-quote{
+  color:white;
+  margin-top:1%;
+  font-style:italic;
+  font-size:val(--big-text);
+  text-align: center;
+}
+.login-button{
+  margin-top: 5%;
+  width: 100%;
+  background-color: var(--main-color);
+  color:white;
+  font-weight: 700;
+  font-size: 1.2em;
+  border-radius: 5px;
+  padding: 2%;
+  border:none;
+}
+.login-google-button{
+  margin-top: 5%;
+  width: 100%;
+  background-color:#4285F4;
+  color:white;
+  font-weight: 700;
+  font-size: 1.2em;
+  border-radius: 5px;
+  padding: 2%;
+  border:none;
+}

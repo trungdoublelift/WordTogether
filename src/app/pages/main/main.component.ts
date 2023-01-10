@@ -10,10 +10,5 @@ import { AuthState } from 'src/ngrx/states/auth.state';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-  constructor(private store:Store<{auth:AuthState}>){
 
-  }
-  login(){
-    this.store.dispatch(AuthActions.loginWithGoogle());
-  }
 }

@@ -1,0 +1,22 @@
+<div class="page-header">
+  <h1 class="title">Tài liệu của bạn</h1>
+  <div class="search-container">
+    <input placeholder="Tìm kiếm tài liệu" class="search-input" />
+  </div>
+  <button>+</button>
+</div>
+<div class="page-content">
+  <div class="content-container">
+    <div class="card-container" *ngFor="let doc of this.documentSvc.documentList">
+      <div class="icon-container">
+        <img class="document-icon" src="../../../../../assets/doc-icon.png" alt="document icon">
+      </div>
+      <div class="detail-container">
+        <span class="document-detail">{{doc.name}}</span>
+        <br>
+        <span class="document-detail">Tạo vào {{doc.createdDate}}</span>
+      </div>
+    </div>
+
+  </div>
+</div>

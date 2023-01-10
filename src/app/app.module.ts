@@ -16,6 +16,7 @@ import { StoreModule } from '@ngrx/store';
 import { authReducer } from 'src/ngrx/reducers/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from 'src/ngrx/effects/auth.effect';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { AuthEffects } from 'src/ngrx/effects/auth.effect';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    RichTextEditorModule,
+
     ShareModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
@@ -35,9 +36,10 @@ import { AuthEffects } from 'src/ngrx/effects/auth.effect';
     }, {}),
     EffectsModule.forRoot([
       AuthEffects,
-    ])
+    ]),
+    BrowserAnimationsModule
   ],
-  providers: [ToolbarService,LinkService,ImageService,HtmlEditorService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,63 @@
+.page-header {
+  background-color: var(--page-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5%;
+}
+
+.search-container {
+  width: 20%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 5%;
+  border: none;
+  border-radius: var(--input-radius);
+
+}
+
+.content-container {
+  display: grid;
+  margin: 1% 0 0 0;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 0.5%;
+}
+
+.card-container {
+  border-radius: var(--card-radius);
+  padding: 5%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+.card-container:hover{
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.icon-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.document-icon {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.detail-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.document-detail {
+  display: inline-block;
+  font-size: var(--normal-text);
+  text-align: center;
+  word-break: break-word;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

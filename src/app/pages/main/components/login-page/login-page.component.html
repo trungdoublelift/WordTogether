@@ -1,0 +1,36 @@
+<div class="page-container">
+  <div class="container">
+    <div class="left">
+      <div class="image-container">
+        <img class="logo" src="../../../../../assets/logo.png" alt="Logo">
+      </div>
+      <div class="project-container">
+        <br>
+        <span class="project-title">Word Together</span>
+        <br>
+        <span class="project-quote">Viết tài liệu cùng với bất kỳ ai ở mọi lúc, mọi nơi</span>
+      </div>
+
+    </div>
+    <div class="right">
+
+      <div class="login-container">
+        <app-loading *ngIf="(this.loginState|async)?.loading" [loadingType]="{message:'Đang đăng nhập',type:'not'}"></app-loading>
+        <span class="login-title">ĐĂNG NHẬP</span>
+        <br>
+        <mat-form-field appearance="fill" class="input-field">
+          <mat-label>Tên đăng nhập</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="fill"class="input-field">
+          <mat-label>Mật khẩu</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <span>Chưa có tài khoản? <a>Đăng ký ngay</a></span>
+        <button class="login-button">Đăng nhập</button>
+        <button class="login-google-button" (click)="this.login()">Đăng nhập với tài khoản Google</button>
+      </div>
+    </div>
+  </div>
+</div>
