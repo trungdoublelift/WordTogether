@@ -10,5 +10,5 @@ import { AuthState } from 'src/ngrx/states/auth.state';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
-
+  active="top"
 }

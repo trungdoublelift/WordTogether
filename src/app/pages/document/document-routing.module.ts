@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { TableComponent } from './components/table/table.component';
 import { DocumentComponent } from './document.component';
 
-const routes: Routes = [{ path: '', component: DocumentComponent },{path:'document',component:TableComponent}];
+const routes: Routes = [{ path: '', component: DocumentComponent,children:[
+  {path:'document',component:TableComponent},
+]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

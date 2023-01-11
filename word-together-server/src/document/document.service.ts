@@ -16,7 +16,7 @@ export class DocumentService {
     const doc: Document = {
       docId: docId,
       name: 'New Document',
-      createDate: Date.now().toString(),
+      createdDate: Date.now().toString(),
       modifiedDate: Date.now().toString(),
       editRight: [],
       type: 'private',

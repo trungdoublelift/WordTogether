@@ -8,4 +8,8 @@ export const AuthActions={
   googleLogout:createAction('[Auth] Google Logout'),
   googleLogoutSuccess:createAction('[Auth] Google Lougout Success'),
   googleLogoutFailure:createAction('[Auth] Google Logout Failure',props<{error:string}>()),
+  getUserInfo:createAction('[Auth] Get User Info',props<{auth:Account}>()),
+  getUserInfoSuccess:createAction('[Auth] Get User Info Success',props<{auth:Account}>()),
+  getUserInfoFailure:createAction('[Auth] Get User Info Failure',props<{error:string}>()),
+
 }

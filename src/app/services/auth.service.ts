@@ -1,15 +1,28 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { signInWithPopup, GoogleAuthProvider, Auth, authState, signOut } from '@angular/fire/auth'
+import { signInWithPopup, GoogleAuthProvider, Auth, authState, signOut, User } from '@angular/fire/auth'
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AuthActions } from 'src/ngrx/actions/auth.action';
+import { AuthState } from 'src/ngrx/states/auth.state';
 import {Account} from '../models/account.model'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private auth: Auth) {
+  constructor(private auth: Auth,private authStore:Store<{auth:AuthState}>,private http:HttpClient) {
     authState(this.auth).subscribe(user => {
-      console.log(user);
+      if(user!=null){
+        let account:Account={
+          userId: user?.uid,
+          email: user?.email,
+          userName:user?.displayName,
+          photoURL:user?.photoURL
+
+        }
+        this.authStore.dispatch(AuthActions.loginWithGoogleSuccess({auth:account}));
+      }
     });
   }
 
@@ -33,6 +46,7 @@ export class AuthService {
       }
     })
   }
+
   async googleLogout() {
     await this.auth.signOut();
   }

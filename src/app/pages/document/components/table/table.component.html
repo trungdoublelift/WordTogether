@@ -7,14 +7,14 @@
 </div>
 <div class="page-content">
   <div class="content-container">
-    <div class="card-container" *ngFor="let doc of this.documentSvc.documentList">
+    <div class="card-container" *ngFor="let doc of this.documentList">
       <div class="icon-container">
         <img class="document-icon" src="../../../../../assets/doc-icon.png" alt="document icon">
       </div>
       <div class="detail-container">
         <span class="document-detail">{{doc.name}}</span>
         <br>
-        <span class="document-detail">Tạo vào {{doc.createdDate}}</span>
+        <span class="document-detail">Tạo vào {{getDate(doc.createdDate)}}</span>
       </div>
     </div>
 

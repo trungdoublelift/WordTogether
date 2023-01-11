@@ -21,6 +21,7 @@ import { DocumentEffects } from 'src/ngrx/effects/document.effect';
 import { documentReducer } from 'src/ngrx/reducers/document.reducer';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +42,8 @@ import { documentReducer } from 'src/ngrx/reducers/document.reducer';
       AuthEffects,
       DocumentEffects,
     ]),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

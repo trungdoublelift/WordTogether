@@ -2,7 +2,7 @@
 export interface Document {
   docId:string,
   name:string,
-  createDate:string,
+  createdDate:string,
   modifiedDate:string,
   editRight:string[],
   seenRight:string[],
