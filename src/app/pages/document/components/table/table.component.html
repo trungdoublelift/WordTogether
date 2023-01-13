@@ -1,13 +1,19 @@
 <div class="page-header">
   <h1 class="title">Tài liệu của bạn</h1>
-  <div class="search-container">
-    <input placeholder="Tìm kiếm tài liệu" class="search-input" />
-  </div>
-  <button (click)="this.createDocument()">+</button>
+  <!-- <div class="search-container">
+    <mat-form-field appearance="fill" class="fld">
+      <input matInput placeholder="Tìm kiếm tài liệu" class="search-input">
+      <mat-icon matPrefix >search</mat-icon>
+    </mat-form-field>
+  </div> -->
+  <button mat-mini-fab class="add-button" matTooltip="Thêm tài liệu mới" [matTooltipShowDelay]="500">
+    <mat-icon>note_add</mat-icon>
+  </button>
 </div>
 <div class="page-content">
   <div class="content-container">
-    <div class="card-container" *ngFor="let doc of this.documentList">
+    <app-loading *ngIf="this.loadingDocument" [loadingType]="{message:'Đang tải dữ liệu',type:'not'}"></app-loading>
+    <div class="card-container" *ngFor="let doc of this.documentList" (click)="navigateToDocument(doc.docId)">
       <div class="icon-container">
         <img class="document-icon" src="../../../../../assets/doc-icon.png" alt="document icon">
       </div>

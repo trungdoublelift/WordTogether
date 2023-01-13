@@ -10,6 +10,30 @@ import { AuthState } from 'src/ngrx/states/auth.state';
 export class DocumentComponent {
   events: string[] = [];
   opened: boolean=true;
+  menuItems=[
+    {
+      name:"Tài liệu của tôi",
+      link:"/document",
+      icon:"library_books",
+    },
+    {
+      name:"Tài liệu được chia sẻ",
+      link:"/document",
+      icon:"folder shared icon",
+    },
+    {
+      name:"Lời mời truy cập",
+      link:"/document",
+      icon:"mail",
+    },
+    {
+      name:"Thùng rác",
+      link:"/document",
+      icon:"delete",
+    },
+
+
+  ]
   mobileQuery!: MediaQueryList;
   auth=this.authState.select('auth')
   private _mobileQueryListener: () => void;
@@ -27,5 +51,6 @@ export class DocumentComponent {
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
+
 
 }

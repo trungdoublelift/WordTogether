@@ -1,5 +1,42 @@
-<ejs-richtexteditor  >
+<div class="header-container">
+  <div class="button-container">
+    <button mat-mini-fab class="add-button" matTooltip="Thêm tài liệu mới" [matTooltipShowDelay]="500">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+  </div>
 
-</ejs-richtexteditor>
-<button (click)="NextPage()">Next</button>
-<button (click)="PreviousPage()">Back</button>
+  <div class="left">
+    <div class="top-left">
+      <input />
+      <span>Đã lưu</span>
+    </div>
+    <div class="bottom-left">
+      <span>Tệp</span>
+      <span>Xem</span>
+      <span>Quản lý truy cập</span>
+    </div>
+  </div>
+  <div class="right">
+    <div class="top-right">
+      <span>Sửa đổi vào lúc 15:30 31/12/2022</span>
+
+    </div>
+    <div class="bottom-right">
+      <button><mat-icon></mat-icon></button>
+      <div>+4</div>
+      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
+
+    </div>
+  </div>
+</div>
+<div class="main-container">
+  <div >
+    <ejs-richtexteditor #docValue [toolbarSettings]="customToolBar"  (focus)="edit=!edit" (keydown)="edit?test($event):''">
+      <ng-template  ></ng-template>
+    </ejs-richtexteditor>
+  </div>
+
+</div>

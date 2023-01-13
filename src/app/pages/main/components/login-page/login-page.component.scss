@@ -25,6 +25,7 @@
   background-color: white;
   margin:0 5% 0 0;
   padding:5% 15% 5% 15%;
+  border-radius:var(--card-radius);
 
 }
 .login-title{
@@ -79,4 +80,8 @@
   border-radius: 5px;
   padding: 2%;
   border:none;
+}
+.register-text{
+  width: 100%;
+  text-align: left;
 }

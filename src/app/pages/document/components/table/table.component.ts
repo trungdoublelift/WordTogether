@@ -7,6 +7,7 @@ import { AuthState } from 'src/ngrx/states/auth.state';
 import { DocumentState } from 'src/ngrx/states/document.state';
 import { collectionChanges, query, collection, where, Firestore } from '@angular/fire/firestore';
 import { Document } from '../../../../models/document.model'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table',
@@ -17,7 +18,11 @@ export class TableComponent {
   documentList: Array<Document> = [];
   tempSub!: Subscription;
   loadingDocument: boolean = true;
-  constructor(public documentSvc: DocumentService, private auth: Store<{ auth: AuthState }>, private document: Store<{ document: DocumentState }>, private db: Firestore) {
+  documentState = this.store.select('document');
+  authState = this.store.select('auth');
+  constructor(public documentSvc: DocumentService, private store: Store<{ auth: AuthState,document:DocumentState}>,
+     private db: Firestore,private route:Router) {
+
     this.authState.subscribe((data) => {
       if (data.auth) {
         let userDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', data.auth.userId))
@@ -40,13 +45,12 @@ export class TableComponent {
     } catch (err) { }
 
   }
-  documentState = this.document.select('document');
-  authState = this.auth.select('auth');
+
   createDocument() {
     try {
       let temp: Subscription = this.authState.subscribe((data) => {
         if (data.auth?.userId) {
-          this.document.dispatch(DocumentActions.createDocument({ userId: data.auth.userId }));
+          this.store.dispatch(DocumentActions.createDocument({ userId: data.auth.userId }));
         }
       })
       temp.unsubscribe();
@@ -62,5 +66,8 @@ export class TableComponent {
     let monthFormat = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
     let dateStr = hoursFormat + ":" + minutesFormat + " " + dayFormat + "/" + monthFormat + "/" + date.getFullYear();
     return dateStr
+  }
+  navigateToDocument(docId:string){
+    this.route.navigate(['view/edit/',docId]);
   }
 }

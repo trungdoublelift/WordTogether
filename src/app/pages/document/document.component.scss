@@ -18,13 +18,13 @@ h1.example-app-name {
   margin-left: 8px;
 }
 
-.example-sidenav-container {
+.sidenav-container {
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
 }
 
-.example-is-mobile .example-sidenav-container {
+.example-is-mobile .sidenav-container {
   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
@@ -35,5 +35,52 @@ h1.example-app-name {
   padding: 10% 0 10% 0;
 }
 .header-container:hover{
+  background-color: var(--secondary-color);
+  color:white;
+  cursor: pointer;
+}
+.toolbar{
   background-color: var(--main-color);
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.app-name{
+  color:white;
+  font-weight: bold;
+}
+.menu-button{
+  color:white;
+
+}
+.left, .right{
+  width: 50%;
+  display:flex;
+}
+.right{
+  justify-content: flex-end;
+}
+.user-avatar{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+  object-fit: cover;
+
+}
+.user-detail{
+  width:100%;
+
+}
+.user-name, .user-email{
+  float:right;
+  margin:0 1% 0 0;
+  color:white;
+
+}
+.user-name{
+  font-weight: bold;
+}
+.user-email{
+  font-size: var(--normal-text);
 }

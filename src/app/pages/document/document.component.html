@@ -1,28 +1,25 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-toolbar color="primary" class="example-toolbar">
-    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="example-app-name">WORD TOGETHER</h1>
-  </mat-toolbar>
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches" >
+  <mat-toolbar class="toolbar">
+   <div class="left">
+    <button class="menu-button" mat-icon-button (click)="snav.toggle()"><mat-icon >menu</mat-icon></button>
+    <h1 class="app-name">WORD TOGETHER</h1>
+   </div>
+   <div class="right" *ngIf="(this.auth|async)?.auth">
+    <div class="user-detail">
+      <span class="user-name">{{(this.auth|async)?.auth?.userName}}</span>
+      <br>
+      <span class="user-email">{{(this.auth|async)?.auth?.email}}</span>
 
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    </div>
+    <img src={{(this.auth|async)?.auth?.photoURL}} alt="user avatar" class="user-avatar">
+   </div>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0"  >
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
       <mat-nav-list>
-
-        <div mat-list-item class="header-container">
-          <mat-icon aria-hidden="false" >library_books</mat-icon><span>Tài liệu của tôi</span>
-        </div>
-        <div mat-list-item  class="header-container">
-          <mat-icon aria-hidden="false" >folder shared icon</mat-icon><span>Tài liệu được chia sẻ</span>
-        </div>
-        <div mat-list-item  class="header-container">
-          <mat-icon aria-hidden="false" >star</mat-icon><span>Tài liệu gắn sao</span>
-        </div>
-        <div mat-list-item  class="header-container">
-          <mat-icon aria-hidden="false" >delete</mat-icon><span>Thùng rác</span>
-        </div>
-        <div mat-list-item  class="header-container">
-          <mat-icon aria-hidden="false" >mail</mat-icon><span>Lời mời truy cập</span>
+        <div mat-list-item class="header-container"*ngFor="let item of this.menuItems">
+          <mat-icon aria-hidden="false" >{{item.icon}}</mat-icon><span>{{item.name}}</span>
         </div>
       </mat-nav-list>
     </mat-sidenav>

@@ -11,6 +11,9 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { FormsModule } from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
+import {MatFormFieldModule} from '@angular/material/form-field'
+import {MatInputModule} from '@angular/material/input';
+import {MatTooltipModule} from '@angular/material/tooltip';
 @NgModule({
   declarations: [
     LoadingComponent,
@@ -27,6 +30,10 @@ import {MatListModule} from '@angular/material/list';
     MatCheckboxModule,
     FormsModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTooltipModule,
+
 
   ],
   exports:[
@@ -40,7 +47,10 @@ import {MatListModule} from '@angular/material/list';
     MatSidenavModule,
     MatCheckboxModule,
     FormsModule,
+    MatFormFieldModule,
     MatListModule,
+    MatInputModule,
+    MatTooltipModule,
   ],
   providers: [ToolbarService,LinkService,ImageService,HtmlEditorService],
 })

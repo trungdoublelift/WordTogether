@@ -1,0 +1,47 @@
+.user-avatar {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: white;
+  object-fit: cover;
+}
+
+.header-container {
+  display: flex;
+  padding: 1%;
+}
+
+.left,
+.right {
+  width: 47.5%;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: right;
+  align-items: flex-end;
+}
+
+.top-left {
+  display: flex;
+
+}
+
+.bottom-left {
+  display: flex;
+
+}
+.top-right{
+
+}
+.bottom-right{
+  display:flex;
+  justify-content: center;
+
+}
+
+.button-container {
+  width: 5%;
+}
+

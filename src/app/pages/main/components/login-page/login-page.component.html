@@ -13,23 +13,22 @@
 
     </div>
     <div class="right">
-
       <div class="login-container">
         <app-loading *ngIf="(this.loginState|async)?.loading" [loadingType]="{message:'Đang đăng nhập',type:'not'}"></app-loading>
         <span class="login-title">ĐĂNG NHẬP</span>
         <br>
-        <!-- <mat-form-field appearance="fill" class="input-field">
+        <mat-form-field appearance="fill" class="input-field" >
           <mat-label>Tên đăng nhập</mat-label>
-          <input matInput>
+          <input matInput [disabled]="(this.loginState|async)?.loading">
         </mat-form-field>
         <br>
         <mat-form-field appearance="fill"class="input-field">
           <mat-label>Mật khẩu</mat-label>
-          <input matInput>
-        </mat-form-field> -->
-        <span>Chưa có tài khoản? <a>Đăng ký ngay</a></span>
-        <button class="login-button">Đăng nhập</button>
-        <button class="login-google-button" (click)="this.login()">Đăng nhập với tài khoản Google</button>
+          <input matInput [disabled]="(this.loginState|async)?.loading">
+        </mat-form-field>
+        <span class="register-text" >Chưa có tài khoản? <a >Đăng ký ngay</a></span>
+        <button class="login-button" [disabled]="(this.loginState|async)?.loading">Đăng nhập</button>
+        <button class="login-google-button" (click)="this.login()" [disabled]="(this.loginState|async)?.loading">Đăng nhập với tài khoản Google</button>
       </div>
     </div>
   </div>
