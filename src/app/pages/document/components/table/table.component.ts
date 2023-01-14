@@ -28,11 +28,7 @@ export class TableComponent {
         let userDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', data.auth.userId))
         this.tempSub = collectionChanges(userDocumentQuery).subscribe((data) => {
           if (data != null) {
-            data.forEach((doc) => {
-              if (doc.type === 'added') {
-                this.documentList.push(doc.doc.data() as Document);
-              }
-            })
+            this.documentList = data.map((doc) => {return doc.doc.data() as Document})
             this.loadingDocument = false;
           }
         })
@@ -42,6 +38,7 @@ export class TableComponent {
   ngOnDestroy(): void {
     try {
       this.tempSub.unsubscribe();
+      this.documentList = [];
     } catch (err) { }
 
   }

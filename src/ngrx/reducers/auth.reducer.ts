@@ -70,4 +70,24 @@ export const authReducer = createReducer(
       error: error,
     }
   }),
+  on(AuthActions.createUserProfile, (state) => {
+    return {
+      ...state,
+      loading: true,
+    }
+  }),
+  on(AuthActions.createUserProfileSuccess, (state) => {
+    return {
+     ...state,
+      loading: false,
+      error: '',
+    }
+  }),
+  on(AuthActions.createUserProfileFailure, (state, { error }) => {
+    return {
+      ...state,
+      loading: false,
+      error: error,
+    }
+  })
 )

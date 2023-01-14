@@ -1,6 +1,8 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import {RichTextEditorComponent} from '@syncfusion/ej2-angular-richtexteditor';
+import { DocumentService } from 'src/app/services/document/document.service';
+
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -17,30 +19,22 @@ export class EditComponent {
   'JustifyRight','JustifyCenter','JustifyFull']
   }
   currentPage=0;
-  test(event:any){
+  constructor(public docService:DocumentService){
+    this.docService.emit('test',{});
+    this.docService.listen('add-document').subscribe((data:any)=>{
 
-      this.docData=this.componentObject.getHtml();
-      console.log(this.docData)
+      this.componentObject.value=data;
+
+    })
+    this.docService.listen('recieve-test').subscribe((data:any)=>{
+      console.log(data);
+    })
 
   }
-  // pages = [{
-  //   pageNumber: 1,
-  //   content: "",
+  test(event:any){
+      this.docData=this.componentObject.getHtml();
+      this.docService.emit('document',this.docData);
 
-  // },
-  // {
-  //   pageNumber: 2,
-  //   content: "",
-  // }
-  // ]
-  // NextPage(){
-  //   this.currentPage++;
-  // }
-  // PreviousPage(){
-  //   this.currentPage--;
-  // }
-  // getContent(pageNum:number,content:any){
-  //   console.log(content)
-  //   this.pages[pageNum].content=content;
-  // }
+  }
+
 }

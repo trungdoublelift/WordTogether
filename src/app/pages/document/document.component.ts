@@ -37,7 +37,8 @@ export class DocumentComponent {
   mobileQuery!: MediaQueryList;
   auth=this.authState.select('auth')
   private _mobileQueryListener: () => void;
-  constructor(public changeDetectorRef: ChangeDetectorRef, public media: MediaMatcher,private authState:Store<{auth:AuthState}>) {
+  constructor(public changeDetectorRef: ChangeDetectorRef,
+     public media: MediaMatcher,private authState:Store<{auth:AuthState}>) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);

@@ -10,7 +10,8 @@ export class UserController {
 
   @Post(['create'])
   async Create(@Body() body) {
-    let result = await this.userService.createUserProfile(body)
+    console.log(body)
+    let result = await this.userService.createUserProfile(body.userId)
     if (result.success) {
       return {
         status: 200,
