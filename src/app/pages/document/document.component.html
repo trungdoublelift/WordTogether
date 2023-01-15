@@ -18,8 +18,8 @@
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
       <mat-nav-list>
-        <div mat-list-item class="header-container"*ngFor="let item of this.menuItems">
-          <mat-icon aria-hidden="false" >{{item.icon}}</mat-icon><span>{{item.name}}</span>
+        <div mat-list-item class="header-container"*ngFor="let item of this.menuItems" (click)="navigate(item.link)">
+          <mat-icon aria-hidden="false"  >{{item.icon}}</mat-icon><span>{{item.name}}</span>
         </div>
       </mat-nav-list>
     </mat-sidenav>

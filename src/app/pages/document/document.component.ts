@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'src/ngrx/states/auth.state';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html',
@@ -13,7 +14,7 @@ export class DocumentComponent {
   menuItems=[
     {
       name:"Tài liệu của tôi",
-      link:"/document",
+      link:"/document/document",
       icon:"library_books",
     },
     {
@@ -23,7 +24,7 @@ export class DocumentComponent {
     },
     {
       name:"Lời mời truy cập",
-      link:"/document",
+      link:"/document/invite",
       icon:"mail",
     },
     {
@@ -37,7 +38,7 @@ export class DocumentComponent {
   mobileQuery!: MediaQueryList;
   auth=this.authState.select('auth')
   private _mobileQueryListener: () => void;
-  constructor(public changeDetectorRef: ChangeDetectorRef,
+  constructor(public changeDetectorRef: ChangeDetectorRef,private route:Router,
      public media: MediaMatcher,private authState:Store<{auth:AuthState}>) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -47,10 +48,11 @@ export class DocumentComponent {
 
 
 
-
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+  navigate(link:string){
+    this.route.navigate([`${link}`]);
   }
 
 

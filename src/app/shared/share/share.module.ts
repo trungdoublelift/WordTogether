@@ -14,6 +14,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     LoadingComponent,
@@ -33,6 +34,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
+    MatExpansionModule
+
 
 
   ],
@@ -51,6 +54,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatListModule,
     MatInputModule,
     MatTooltipModule,
+    MatExpansionModule
   ],
   providers: [ToolbarService,LinkService,ImageService,HtmlEditorService],
 })

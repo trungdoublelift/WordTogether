@@ -13,7 +13,7 @@ export class DocumentService {
   socketURL='http://localhost:3000';
   constructor(private http:HttpClient) {
     //create socket connection
-    this.socket=io(this.socketURL);
+    // this.socket=io(this.socketURL);
    }
   documentList: Array<Document> =[];
 

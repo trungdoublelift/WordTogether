@@ -1,0 +1,35 @@
+.page-header {
+  background-color: var(--page-header);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1%;
+}
+.content-container {
+  display: grid;
+  margin: 1% 1% 0 1%;
+  grid-template-columns: repeat(1, minmax(100px, 1fr));
+  gap: 0.5%;
+}
+.add-button{
+  background-color: var(--secondary-color);
+}
+.button-container{
+  display: flex;
+  justify-content: flex-end;
+  margin: 1% 0 0 0;
+  padding: 1% 0 1% 0;
+}
+.accept-button, .refuse-button{
+  color:white !important;
+
+}
+.accept-button{
+  background-color:var(--secondary-color) !important;
+}
+.refuse-button{
+  background-color:var(--red-color) !important;
+}
+.invite-title{
+ font-weight: bold;
+}

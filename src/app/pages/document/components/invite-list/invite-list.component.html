@@ -1,0 +1,48 @@
+<div class="page-header">
+  <h1 class="title">Lời mời truy cập tài liệu</h1>
+
+  <!-- <button mat-mini-fab class="add-button" matTooltip="Thêm tài liệu mới" [matTooltipShowDelay]="500">
+    <mat-icon>note_add</mat-icon>
+  </button> -->
+</div>
+<div class="page-content">
+  <div class="content-container">
+    <!-- <app-loading [loadingType]="{message:'Đang tải dữ liệu',type:'not'}"></app-loading> -->
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="invite-title">
+          Lời mời truy cập
+        </mat-panel-title>
+        <mat-panel-description class="invite-description">
+          Lời mời truy cập tài liệu từ Nguyễn Hoàng Trung
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <span>Bạn được mời truy cập tài liệu <span><strong>Báo cáo thực tập nhận thức</strong></span> với quyền<span><strong> Chỉnh sửa</strong></span></span>
+      <br>
+      <span>Thời gian : <span>15:30 31/12/2022</span></span><span> Bởi: <span>Nguyễn Hoàng Trung</span></span>
+      <div class="button-container">
+        <button mat-raised-button class="refuse-button">Từ chối</button>
+        <button mat-raised-button class="accept-button">Chấp nhận</button>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="invite-title">
+          Thông báo
+        </mat-panel-title>
+        <mat-panel-description class="invite-description">
+          Lời mời truy cập tài liệu từ Nguyễn Hoàng Trung
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <span>Bạn được mời truy cập tài liệu <span><strong>Báo cáo thực tập nhận thức</strong></span> với quyền<span><strong> Chỉnh sửa</strong></span></span>
+      <br>
+      <span>Thời gian : <span>15:30 31/12/2022</span></span><span> Bởi: <span>Nguyễn Hoàng Trung</span></span>
+
+    </mat-expansion-panel>
+
+
+
+
+
+  </div>
+</div>
