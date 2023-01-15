@@ -15,6 +15,7 @@ import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatBadgeModule} from '@angular/material/badge';
 @NgModule({
   declarations: [
     LoadingComponent,
@@ -34,7 +35,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatBadgeModule
 
 
 
@@ -54,7 +56,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatListModule,
     MatInputModule,
     MatTooltipModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatBadgeModule
   ],
   providers: [ToolbarService,LinkService,ImageService,HtmlEditorService],
 })

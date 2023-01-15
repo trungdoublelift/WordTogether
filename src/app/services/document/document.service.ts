@@ -35,5 +35,16 @@ export class DocumentService {
   emit(eventName:string,data:any){
     this.socket.emit(eventName,data);
   }
+   saveDocument(docId:string,documentString:string){
+     this.http.post(this.apiURL+'save',{docId:docId,content:documentString}).subscribe((data)=>{
+      console.log('1');
+     });
+
+  }
+  readDocument(docId:string){
+    this.http.post(this.apiURL+'read',{docId:docId}).subscribe((data)=>{
+      console.log('1');
+     });
+  }
 
 }

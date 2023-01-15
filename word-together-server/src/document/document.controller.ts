@@ -28,6 +28,18 @@ export class DocumentController {
       }
     }
   }
+  @Post(['save'])
+  async Save(@Body() body){
+    let result = await this.documentService.saveDocument(body.userId, body.docId, body.content)
+
+  }
+  @Post(['read'])
+  async Read(@Body() body){
+    console.log(body);
+    let result = await this.documentService.readDocumentReturnString(body.docId);
+    console.log(result);
+
+  }
   @Delete(['delete'])
   async Delete(@Body() body) {
     let result = await this.documentService.deleteDocument(body.userId, body.docId)

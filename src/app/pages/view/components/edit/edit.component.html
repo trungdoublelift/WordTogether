@@ -34,9 +34,10 @@
 </div>
 <div class="main-container">
   <div >
-    <ejs-richtexteditor #docValue [toolbarSettings]="customToolBar"  (focus)="edit=!edit" (keydown)="edit?test($event):''">
+    <ejs-richtexteditor  #docValue [toolbarSettings]="customToolBar"  (focus)="edit=!edit" (keydown)="edit?test($event):''">
       <ng-template  ></ng-template>
     </ejs-richtexteditor>
   </div>
+  <button (click)="save()">Lưu</button>
 
 </div>

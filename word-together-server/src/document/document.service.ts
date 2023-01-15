@@ -1,9 +1,12 @@
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 
 import { getFirestore } from 'firebase-admin/firestore';
 import { Document } from 'src/models/document.model';
 import * as firebase from 'firebase-admin'
+import "firebase/storage";
 @Injectable()
 export class DocumentService {
   db = getFirestore();
@@ -80,4 +83,27 @@ export class DocumentService {
       return { success: false, error: err }
     }
   }
+  async saveDocument(userId: string, docId: string, content: string) {
+    const storage = firebase.storage();
+    const file = storage.bucket().file(docId);
+    await file.save(content);
+
+  }
+  async readDocumentReturnString(docId:string){
+    try{
+      const storage = firebase.storage();
+      const file = storage.bucket().file(docId);
+
+      const content = await file.download();
+      if(content){
+        return content.toString();
+      }else{
+        return null;
+      }
+    }catch(err){
+      console.log(err);
+    }
+
+  }
+
 }

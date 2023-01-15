@@ -28,6 +28,7 @@
     "@syncfusion/ej2-base": "^20.4.42",
     "@syncfusion/ej2-material-theme": "~20.4.42",
     "bootstrap": "^5.2.3",
+    "docx": "^7.8.2",
     "rxjs": "~7.5.0",
     "socket.io-client": "^4.5.4",
     "tslib": "^2.3.0",
