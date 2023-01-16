@@ -87,7 +87,6 @@ export class DocumentService {
     const storage = firebase.storage();
     const file = storage.bucket().file(docId);
     await file.save(content);
-
   }
   async readDocumentReturnString(docId:string){
     try{
@@ -104,6 +103,7 @@ export class DocumentService {
       console.log(err);
     }
 
-  }
+  };
+
 
 }

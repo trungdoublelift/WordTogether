@@ -11,7 +11,8 @@ import {Account} from '../models/account.model'
   providedIn: 'root'
 })
 export class AuthService {
-  apiURL:string=`${environment.apiURL}user/`
+  apiURL:string=`${environment.apiURL}user/`;
+  currentUser!:Account
   constructor(private auth: Auth,private authStore:Store<{auth:AuthState}>,private http:HttpClient) {
     authState(this.auth).subscribe(user => {
       if(user!=null){
@@ -25,9 +26,7 @@ export class AuthService {
         this.authStore.dispatch(AuthActions.loginWithGoogleSuccess({auth:account}));
       }
     });
-    this.authStore.select('auth').subscribe((state)=>{
-      console.log(state);
-    })
+
   }
 
   loginWithGoogle() {

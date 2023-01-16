@@ -3,17 +3,15 @@ import { environment } from 'src/environments/environment';
 import {Document} from '../../models/document.model'
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {io} from 'socket.io-client';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentService {
   apiURL=`${environment.apiURL}document/`
-  socket:any
-  socketURL='http://localhost:3000';
+
   constructor(private http:HttpClient) {
-    //create socket connection
-    // this.socket=io(this.socketURL);
+
    }
   documentList: Array<Document> =[];
 
@@ -24,17 +22,8 @@ export class DocumentService {
   //   return this.http.delete(this.apiURL+'delete',{userId:userId,docId:docId});
   // }
 
-  listen(eventName:string){
-    return new Observable((subscriber)=>{
-      this.socket.on(eventName,(data:any)=>{
-        console.log(data)
-        subscriber.next(data);
-      })
-    })
-  };
-  emit(eventName:string,data:any){
-    this.socket.emit(eventName,data);
-  }
+
+
    saveDocument(docId:string,documentString:string){
      this.http.post(this.apiURL+'save',{docId:docId,content:documentString}).subscribe((data)=>{
       console.log('1');
@@ -42,9 +31,11 @@ export class DocumentService {
 
   }
   readDocument(docId:string){
-    this.http.post(this.apiURL+'read',{docId:docId}).subscribe((data)=>{
-      console.log('1');
+    this.http.post(this.apiURL+'read',{docId:docId},{responseType:"text"}).subscribe((data)=>{
+
+      console.log('data nè',data);
      });
-  }
+  };
+
 
 }

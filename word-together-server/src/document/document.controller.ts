@@ -37,7 +37,7 @@ export class DocumentController {
   async Read(@Body() body){
     console.log(body);
     let result = await this.documentService.readDocumentReturnString(body.docId);
-    console.log(result);
+     return result.toString();
 
   }
   @Delete(['delete'])
