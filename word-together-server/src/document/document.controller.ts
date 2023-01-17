@@ -29,15 +29,32 @@ export class DocumentController {
     }
   }
   @Post(['save'])
-  async Save(@Body() body){
+  async Save(@Body() body) {
     let result = await this.documentService.saveDocument(body.userId, body.docId, body.content)
-
+    if (result.success) {
+      return {
+        status: 200,
+        message: "Lưu tài liệu"
+      }
+    } else {
+      return {
+        status: 400,
+        message: "Lưu tài liệu thất bại"
+      }
+    }
   }
   @Post(['read'])
-  async Read(@Body() body){
+  async Read(@Body() body) {
     console.log(body);
     let result = await this.documentService.readDocumentReturnString(body.docId);
-     return result.toString();
+    if (result.success) {
+      return result.content.toString();
+    } else {
+      return {
+        status: 400,
+        message: "Đọc tài liệu thất bại"
+      }
+    }
 
   }
   @Delete(['delete'])

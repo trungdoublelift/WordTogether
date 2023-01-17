@@ -86,21 +86,26 @@ export class DocumentService {
   async saveDocument(userId: string, docId: string, content: string) {
     const storage = firebase.storage();
     const file = storage.bucket().file(docId);
-    await file.save(content);
+    try {
+      await file.save(content);
+      return { success: true }
+    } catch (err) {
+      return { success: false, error: err }
+    }
   }
-  async readDocumentReturnString(docId:string){
-    try{
+  async readDocumentReturnString(docId: string) {
+    try {
       const storage = firebase.storage();
       const file = storage.bucket().file(docId);
 
       const content = await file.download();
-      if(content){
-        return content.toString();
-      }else{
-        return null;
+      if (content) {
+        return { success: true, content: content.toString() };
+      } else {
+        throw new Error("Không thể đọc file");
       }
-    }catch(err){
-      console.log(err);
+    } catch (err) {
+      return { success: false, error: err }
     }
 
   };

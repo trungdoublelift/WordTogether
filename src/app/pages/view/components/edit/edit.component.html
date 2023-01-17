@@ -7,13 +7,21 @@
 
   <div class="left">
     <div class="top-left">
-      <input />
-      <span>Đã lưu</span>
+      <input class="docName-input" />
+      <mat-chip class="status-success">
+        <span class="status-text">Đã lưu</span>
+      </mat-chip>
+      <mat-chip class="status-inprocess">
+        <span class="status-text">Đang lưu</span>
+      </mat-chip>
+      <mat-chip class="status-fail">
+        <span class="status-text">Chưa lưu</span>
+      </mat-chip>
     </div>
     <div class="bottom-left">
-      <span>Tệp</span>
-      <span>Xem</span>
-      <span>Quản lý truy cập</span>
+      <button mat-button [matMenuTriggerFor]="menuFile">Tệp</button>
+      <button mat-button [matMenuTriggerFor]="menuWatch">Xem</button>
+      <button mat-button [matMenuTriggerFor]="menuAccessControl">Quản lý truy cập</button>
     </div>
   </div>
   <div class="right">
@@ -24,20 +32,33 @@
     <div class="bottom-right">
       <button><mat-icon></mat-icon></button>
       <div>+4</div>
-      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
-      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
-      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
-      <img src="../../../../../assets/userlogo.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
+      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
 
     </div>
   </div>
 </div>
 <div class="main-container">
-  <div >
-    <ejs-richtexteditor  #docValue [toolbarSettings]="customToolBar"  (focus)="edit=!edit" (keydown)="edit?test($event):''">
-      <ng-template  ></ng-template>
+  <div>
+    <ejs-richtexteditor #docValue [toolbarSettings]="customToolBar" [value]="(document$|async)?.documentString"
+      (focus)="edit=!edit" (keydown)="edit?test($event):''">
+      <ng-template></ng-template>
     </ejs-richtexteditor>
   </div>
   <button (click)="save()">Lưu</button>
 
 </div>
+<mat-menu #menuFile="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>
+<mat-menu #menuWatch="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>
+<mat-menu #menuAccessControl="matMenu">
+  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item>Item 2</button>
+</mat-menu>

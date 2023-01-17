@@ -16,11 +16,13 @@ export class DocumentGateWay implements OnGatewayConnection, OnGatewayDisconnect
   }
   @SubscribeMessage('joinRoom')
   handleJoinRoom(client: Socket,payload:any) {
-
+    console.log('join room',client.id)
     client.join(payload.docId);
     let room = this.rooms.findIndex((room)=>room.roomId===payload.docId);
     if(room==-1){
+      //Thêm người dùng vào phòng
       this.rooms.push({roomId:payload.docId,users:[{userInfo:payload.user,socketId:client.id}]});
+
     }else{
       this.rooms[room].users.push({userInfo:payload.user,socketId:client.id});
     }
@@ -28,6 +30,7 @@ export class DocumentGateWay implements OnGatewayConnection, OnGatewayDisconnect
   }
   @SubscribeMessage('leaveRoom')
   handleLeaveRoom(client: Socket,payload:any) {
+    console.log('leave room',client.id)
     client.leave(payload.docId);
     let room = this.rooms.findIndex((room)=>room.roomId===payload.docId);
     if(room!=-1){
@@ -36,13 +39,15 @@ export class DocumentGateWay implements OnGatewayConnection, OnGatewayDisconnect
         this.rooms[room].users.splice(user,1);
       }
     }
+    console.log(this.rooms[room])
     this.wss.emit('leaveRoom',this.rooms[room]);
   }
-
-
-
-
-
+  @SubscribeMessage('sendDocumentData')
+  handleUpdateDocumentData(client: Socket,payload:any) {
+    // console.log("Dữ liệu send",payload)
+    // console.log('send Document Data',client.id)
+    this.wss.to(payload.docId).emit('getSentDocumentData',payload.documentString);
+  }
 
 }
 

@@ -28,4 +28,49 @@ export class DocumentEffects {
       })
     )
   })
+  saveDocument$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(DocumentActions.saveDocument),
+      switchMap((action)=>{
+        return from(this.documentSvc.saveDocument(action.docId,action.documentString)).pipe(
+          map((result:any)=>{
+            return DocumentActions.saveDocumentSuccess();
+          }),
+          catchError((error)=>{
+            return of(DocumentActions.saveDocumentFailure({error:error}));
+          })
+        )
+      })
+    )
+  })
+  // deleteDocument$=createEffect(()=>{
+  //   return this.actions$.pipe(
+  //     ofType(DocumentActions.deleteDocument),
+  //     switchMap((action)=>{
+  //       return from(this.documentSvc.deleteDocument(action.userId,action.docId)).pipe(
+  //         map((result:any)=>{
+  //           return DocumentActions.deleteDocumentSuccess();
+  //         }),
+  //         catchError((error)=>{
+  //           return of(DocumentActions.deleteDocumentFailure({error:error}));
+  //         })
+  //       )
+  //     })
+  //   )
+  // })
+  readDocument$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(DocumentActions.readDocment),
+      switchMap((action)=>{
+        return from(this.documentSvc.readDocument(action.docId)).pipe(
+          map((result:any)=>{
+            return DocumentActions.readDocumentSuccess({documentString:result});
+          }),
+          catchError((error)=>{
+            return of(DocumentActions.readDocumentFailure({error:error}));
+          })
+        )
+      })
+    )
+  })
 }

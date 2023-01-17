@@ -16,6 +16,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
 @NgModule({
   declarations: [
     LoadingComponent,
@@ -36,7 +38,9 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatInputModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule,
+    MatChipsModule,
 
 
 
@@ -57,7 +61,9 @@ import {MatBadgeModule} from '@angular/material/badge';
     MatInputModule,
     MatTooltipModule,
     MatExpansionModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule,
+    MatChipsModule,
   ],
   providers: [ToolbarService,LinkService,ImageService,HtmlEditorService],
 })

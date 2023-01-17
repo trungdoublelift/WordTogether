@@ -9,4 +9,12 @@ export const DocumentActions={
   deleteDocument:createAction('[Document] Delete Document',props<{userId:string,docId:string}>()),
   deleteDocumentSuccess:createAction('[Document] Delete Document Success'),
   deleteDocumentFailure:createAction('[Document] Delete Document Failure',props<{error:string}>()),
+
+  saveDocument:createAction('[Document] Save Document',props<{docId:string,documentString:string}>()),
+  saveDocumentSuccess:createAction('[Document] Save Document Success'),
+  saveDocumentFailure:createAction('[Document] Save Document Failure',props<{error:string}>()),
+
+  readDocment:createAction('[Document] Read Document',props<{docId:string}>()),
+  readDocumentSuccess:createAction('[Document] Read Document Success',props<{documentString:string}>()),
+  readDocumentFailure:createAction('[Document] Read Document Failure',props<{error:string}>()),
 }
