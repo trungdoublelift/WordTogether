@@ -16,22 +16,22 @@ export class DocumentComponent {
   menuItems=[
     {
       name:"Tài liệu của tôi",
-      link:"/all",
+      link:"/document/all",
       icon:"library_books",
     },
     {
       name:"Tài liệu được chia sẻ",
-      link:"",
+      link:"/document",
       icon:"folder shared icon",
     },
     {
       name:"Lời mời truy cập",
-      link:"/invite",
+      link:"/document/invite",
       icon:"mail",
     },
     {
       name:"Thùng rác",
-      link:"/delete",
+      link:"/document/delete",
       icon:"delete",
     },
     {

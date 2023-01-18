@@ -34,7 +34,7 @@ export class AuthEffects {
         return from(this.authSvc.googleLogout()).pipe(
           map((result)=>{
             if(result){
-              this.route.navigate(['/login'])
+              this.route.navigate(['/'])
               return AuthActions.googleLogoutSuccess();
             }else{
               throw new Error('Không thể đăng xuất');
