@@ -6,6 +6,7 @@ import { DocumentComponent } from './document.component';
 import { TableComponent } from './components/table/table.component';
 import { ShareModule } from 'src/app/shared/share/share.module';
 import { InviteListComponent } from './components/invite-list/invite-list.component';
+import { AddDocumentComponent } from './components/add-document/add-document.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { InviteListComponent } from './components/invite-list/invite-list.compon
     DocumentComponent,
     TableComponent,
     InviteListComponent,
+    AddDocumentComponent,
 
   ],
   imports: [

@@ -7,5 +7,6 @@ export interface Document {
   editRight:string[],
   seenRight:string[],
   type:string,
+  hide:boolean,
   createdBy:string,
 }

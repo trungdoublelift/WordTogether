@@ -6,5 +6,6 @@ export interface Document{
   editRight:Array<string>,
   seenRight:Array<string>,
   type:string,
+  hide:boolean,
   createdBy:string,
 }

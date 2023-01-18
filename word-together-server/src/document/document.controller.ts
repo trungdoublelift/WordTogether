@@ -14,7 +14,7 @@ export class DocumentController {
 
   @Post(['create'])
   async Create(@Body() body) {
-    let result = await this.documentService.createNewDocument(body.userId)
+    let result = await this.documentService.createNewDocument(body.userId,body.docName)
     if (result.success) {
       return {
         status: 200,
@@ -50,10 +50,7 @@ export class DocumentController {
     if (result.success) {
       return result.content.toString();
     } else {
-      return {
-        status: 400,
-        message: "Đọc tài liệu thất bại"
-      }
+      return '';
     }
 
   }
@@ -66,6 +63,22 @@ export class DocumentController {
         message: "Xóa tài liệu thành công"
       }
     } else {
+      return {
+        status: 400,
+        message: result.error
+      }
+    }
+  }
+  @Put(['updateStatus'])
+  async UpdateDocStatus(@Body() body) {
+
+    let result = await this.documentService.updateDocStatus(body.docId, body.status)
+    if (result.success) {
+      return {
+        status: 200,
+        message: "Cập nhật trạng thái tài liệu thành công"
+      }
+    }else{
       return {
         status: 400,
         message: result.error

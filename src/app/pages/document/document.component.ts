@@ -3,6 +3,8 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import { Store } from '@ngrx/store';
 import { AuthState } from 'src/ngrx/states/auth.state';
 import { Router } from '@angular/router';
+import { AuthActions } from 'src/ngrx/actions/auth.action';
+import { DocumentActions } from 'src/ngrx/actions/document.action';
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html',
@@ -32,6 +34,11 @@ export class DocumentComponent {
       link:"/document",
       icon:"delete",
     },
+    {
+      name:"Đăng xuất",
+      link:"/document/logout",
+      icon:"delete",
+    },
 
 
   ]
@@ -52,8 +59,14 @@ export class DocumentComponent {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   navigate(link:string){
-    this.route.navigate([`${link}`]);
+    if(link=="/document/logout"){
+      this.authState.dispatch(AuthActions.googleLogout())
+    }else{
+      this.route.navigate([`${link}`]);
+    }
+
   }
+
 
 
 }

@@ -1,13 +1,13 @@
-<div class="header-container">
+<div class="header-container" *ngIf="this.currentDocumentData">
   <div class="button-container">
-    <button mat-mini-fab class="add-button" matTooltip="Thêm tài liệu mới" [matTooltipShowDelay]="500">
+    <button mat-mini-fab class="add-button" matTooltip="Quay lại" [matTooltipShowDelay]="500">
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
 
   <div class="left">
     <div class="top-left">
-      <input class="docName-input" />
+      <input class="docName-input" [(ngModel)]="this.currentDocumentData.name"/>
       <mat-chip class="status-success">
         <span class="status-text">Đã lưu</span>
       </mat-chip>
@@ -26,32 +26,28 @@
   </div>
   <div class="right">
     <div class="top-right">
-      <span>Sửa đổi vào lúc 15:30 31/12/2022</span>
+      <span>Sửa đổi vào lúc {{getDate(this.currentDocumentData.modifiedDate)}}</span>
 
     </div>
     <div class="bottom-right">
       <button><mat-icon></mat-icon></button>
-      <div>+4</div>
-      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
-      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
-      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
-      <img src="../../../../../assets/pngwing.com.png" alt="user avatar" class="user-avatar">
-
+      <div *ngIf="this.users.length>4">{{this.users.length-4}}</div>
+      <img *ngFor="let user of this.users |slice:0:4" [src]="user.photoURL" alt="user avatar" class="user-avatar">
     </div>
   </div>
 </div>
 <div class="main-container">
   <div>
-    <ejs-richtexteditor #docValue [toolbarSettings]="customToolBar" [value]="(document$|async)?.documentString"
-      (focus)="edit=!edit" (keydown)="edit?test($event):''">
+    <ejs-richtexteditor [enabled]="this.editable"  #docValue [toolbarSettings]="customToolBar" [value]="(document$|async)?.documentString"
+      (focus)="edit=!edit" (keydown)="edit?onEdit($event):''">
       <ng-template></ng-template>
     </ejs-richtexteditor>
   </div>
-  <button (click)="save()">Lưu</button>
+
 
 </div>
 <mat-menu #menuFile="matMenu">
-  <button mat-menu-item>Item 1</button>
+  <button mat-menu-item (click)="this.save()">Lưu</button>
   <button mat-menu-item>Item 2</button>
 </mat-menu>
 <mat-menu #menuWatch="matMenu">

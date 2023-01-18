@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatListModule} from '@angular/material/list';
 import {MatFormFieldModule} from '@angular/material/form-field'
 import {MatInputModule} from '@angular/material/input';
@@ -18,10 +18,16 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatChipsModule} from '@angular/material/chips';
+import { WarningComponent } from 'src/app/components/warning/warning.component';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     LoadingComponent,
     ErrorComponent,
+    WarningComponent
   ],
   imports: [
     CommonModule,
@@ -41,13 +47,20 @@ import {MatChipsModule} from '@angular/material/chips';
     MatBadgeModule,
     MatMenuModule,
     MatChipsModule,
-
+    MatStepperModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    DragDropModule,
 
 
   ],
   exports:[
     LoadingComponent,
+    MatDialogModule,
+    ReactiveFormsModule,
     ErrorComponent,
+    WarningComponent,
     RichTextEditorModule,
     MatToolbarModule,
     MatIconModule,
@@ -64,6 +77,11 @@ import {MatChipsModule} from '@angular/material/chips';
     MatBadgeModule,
     MatMenuModule,
     MatChipsModule,
+    MatStepperModule,
+    MatSnackBarModule,
+    DragDropModule,
+
+
   ],
   providers: [ToolbarService,LinkService,ImageService,HtmlEditorService],
 })

@@ -16,11 +16,14 @@ export class DocumentService {
   }
   documentList: Array<Document> = [];
 
-  createDocument(userId: string) {
-    return this.http.post(this.apiURL + 'create', { userId: userId }) as Observable<string>;
+  createDocument(userId: string,docName:string) {
+    return this.http.post(this.apiURL + 'create', { userId: userId,docName:docName }) as Observable<string>;
   }
   deleteDocument(userId:string,docId:string){
     // return this.http.delete(this.apiURL+'delete',{userId:userId,docId:docId});
+  }
+  updateDocStatus(docId:string,status:boolean){
+    return this.http.put(this.apiURL+'updateStatus',{docId:docId,status:status}) as Observable<any>;
   }
   saveDocument(docId: string, documentString: string) {
     return this.http.post(this.apiURL + 'save', { docId: docId, content: documentString }) as Observable<any>;

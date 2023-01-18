@@ -13,18 +13,19 @@ export class DocumentService {
   getHello(): string {
     return 'Hello World!';
   }
-  async createNewDocument(userId: string) {
+  async createNewDocument(userId: string, docName: string) {
 
     const docId = Date.now().toString();
     const doc: Document = {
       docId: docId,
-      name: 'New Document',
+      name: docName,
       createdDate: Date.now().toString(),
       modifiedDate: Date.now().toString(),
       editRight: [],
       type: 'private',
       seenRight: [],
       createdBy: userId,
+      hide: false
     }
     try {
       await this.db.collection('documents').doc(docId).set(doc);
@@ -88,6 +89,17 @@ export class DocumentService {
     const file = storage.bucket().file(docId);
     try {
       await file.save(content);
+      return { success: true }
+    } catch (err) {
+      return { success: false, error: err }
+    }
+  }
+  async updateDocStatus(docId: string, status: boolean) {
+    try {
+
+      await this.db.collection('documents').doc(docId).update({
+        hide: status
+      })
       return { success: true }
     } catch (err) {
       return { success: false, error: err }

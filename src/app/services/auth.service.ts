@@ -51,7 +51,14 @@ export class AuthService {
   }
 
   async googleLogout() {
-    await this.auth.signOut();
+    return new Promise<boolean>(async (resolve, reject) => {
+      try {
+        await signOut(this.auth);
+        resolve(true);
+      } catch (err) {
+        reject(false);
+      }
+    });
   }
   async checkFirstLogin(userId:string){
     return this.http.post(`${this.apiURL}create`,{

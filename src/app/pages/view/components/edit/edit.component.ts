@@ -31,8 +31,10 @@ export class EditComponent implements OnInit, OnDestroy {
   storage = getStorage();
   watchRoom!: Subscription;
   tempSub!: Subscription;
-  checkFirstLogin= false;
+  saveStatusSub!: Subscription;
+  checkFirstLogin = false;
   watchDoc!: Subscription;
+  editable = true;
   customToolBar: Object = {
     items: ['Redo', 'Undo', '|', 'FontName', 'Formats', '|', 'Bold', 'Italic', 'Underline', '|', 'Alignments', 'JustifyLeft',
       'JustifyRight', 'JustifyCenter', 'JustifyFull', 'image']
@@ -53,46 +55,47 @@ export class EditComponent implements OnInit, OnDestroy {
     this.store.select('auth').subscribe((data) => {
       if (data.auth) {
         this.currentUser = data.auth;
-        //  this.tempSub= this.docService.getDocument(this.docId).subscribe((data) => {
-        //     this.currentDocumentData=data;
-        //   })
+        this.tempSub = this.docService.getDocument(this.docId).subscribe((data) => {
+          this.currentDocumentData = data;
+        })
 
-        try{
+        try {
           this.socket = io(this.socketURL);
-        }catch(err){
+          this.joinRoom(this.docId, data.auth!);
+          this.watchRoom = this.watchRoomChange().subscribe((data: any) => {
+            this.users = data.users;
+            console.log(this.users)
+            //Kiểm tra xem có phải người dùng đầu tiên đăng nhập vào document hay không
+            if (data.users.length == 1) {
+              this.checkFirstLogin = true;
+              if (this.componentObject.value == '') {
+                // nếu chưa có dữ liệu thì lấy dữ liệu từ firebase
+                this.store.dispatch(DocumentActions.readDocment({ docId: this.docId }));
+              } else { }
+            } else {
+              if (this.socket.id == data.users[0].socketId) {
+                this.socket.emit('sendDocumentData', { docId: this.docId, documentString: this.componentObject.getHtml() });
+              }
+              this.checkFirstLogin = false;
+              // Lấy dữ liệu document sau khi lấy xong huỷ lắng nghe
+              this.watchDoc = this.getDocumentData(this.docId).subscribe((data: any) => {
+                if (data) {
+                  this.componentObject.value = data;
+                  try {
+                  } catch (err) { }
+                }
+              })
+              this.saveStatusSub = this.getSaveStatus(this.docId).subscribe((data: any) => {
+                this.editable = data;
+
+              })
+            }
+          })
+        } catch (err) {
           console.log(err)
           this.socket = io(this.socketURL);
         }
-        this.joinRoom(this.docId, data.auth!);
-        this.watchRoom = this.watchRoomChange().subscribe((data:any) => {
-          this.users = data.users;
-          console.log(this.users)
-          //Kiểm tra xem có phải người dùng đầu tiên đăng nhập vào document hay không
-          if (data.users.length == 1) {
-            this.checkFirstLogin= true;
-            if(this.componentObject.value==''){
-              // nếu chưa có dữ liệu thì lấy dữ liệu từ firebase
-              this.store.dispatch(DocumentActions.readDocment({ docId: this.docId }));
-            }else{}
-          }else{
-            if(this.socket.id==data.users[0].socketId){
-              this.socket.emit('sendDocumentData',{docId:this.docId,documentString:this.componentObject.getHtml()});
-            }
-            this.checkFirstLogin= false;
-            // Lấy dữ liệu document sau khi lấy xong huỷ lắng nghe
-            this.watchDoc=this.getDocumentData(this.docId).subscribe((data:any)=>{
-              if(data){
-                this.componentObject.value=data;
-                try{
-                  this.watchDoc.unsubscribe();
-                }catch(err){}
-              }
 
-
-            })
-
-          }
-        })
 
       } else { }
     })
@@ -116,7 +119,18 @@ export class EditComponent implements OnInit, OnDestroy {
   }
   save() {
     let documentValue = this.componentObject.getHtml();
-    this.docService.saveDocument(this.docId, documentValue);
+    this.store.dispatch(DocumentActions.saveDocument({ docId: this.docId, documentString: documentValue }))
+    this.socket.emit('saveDocument', { docId: this.docId });
+    let temp = this.document$.subscribe((data:any) => {
+      if (data.success) {
+        this.socket.emit('saveDocumentComplete', { docId: this.docId });
+        try {
+          temp.unsubscribe();
+        } catch (err) { }
+      }
+
+    })
+
   }
   joinRoom(docId: string, user: Account) {
     let payload = {
@@ -139,12 +153,36 @@ export class EditComponent implements OnInit, OnDestroy {
       })
     })
   }
-  getDocumentData(docId:string){
-    return new Observable((observer)=>{
-      this.socket.on('getSentDocumentData', (data:any)=>{
+  getDocumentData(docId: string) {
+    return new Observable((observer) => {
+      this.socket.on('getSentDocumentData', (data: any) => {
         observer.next(data);
       })
     })
+  }
+  getSaveStatus(docId: string) {
+    return new Observable((observer) => {
+      this.socket.on('saveDocumentStatus', (data: any) => {
+        observer.next(data);
+      })
+    })
+
+  }
+  onEdit(event: any) {
+    if (event.key == 'Enter' || event.key == ' ') {
+      this.socket.emit('sendNewDocumentData', { docId: this.docId, documentString: this.componentObject.getHtml() });
+    } else {
+      return
+    }
+  }
+  getDate(timeStamp: any): string {
+    let date = new Date(parseInt(timeStamp))
+    let hoursFormat = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    let minutesFormat = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    let dayFormat = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    let monthFormat = (date.getMonth() + 1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+    let dateStr = hoursFormat + ":" + minutesFormat + " " + dayFormat + "/" + monthFormat + "/" + date.getFullYear();
+    return dateStr
   }
 
 }

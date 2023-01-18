@@ -27,4 +27,24 @@ export class AuthEffects {
       })
     )
   })
+  logOut$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(AuthActions.googleLogout),
+      switchMap(()=>{
+        return from(this.authSvc.googleLogout()).pipe(
+          map((result)=>{
+            if(result){
+              this.route.navigate(['/login'])
+              return AuthActions.googleLogoutSuccess();
+            }else{
+              throw new Error('Không thể đăng xuất');
+            }
+          }),
+          catchError((error)=>{
+            return of(AuthActions.googleLogoutFailure({error:error}));
+          })
+        )
+      })
+    )
+  })
 }

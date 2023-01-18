@@ -8,6 +8,8 @@ import { DocumentState } from 'src/ngrx/states/document.state';
 import { collectionChanges, query, collection, where, Firestore } from '@angular/fire/firestore';
 import { Document } from '../../../../models/document.model'
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AddDocumentComponent } from '../add-document/add-document.component';
 
 @Component({
   selector: 'app-table',
@@ -16,21 +18,27 @@ import { Router } from '@angular/router';
 })
 export class TableComponent {
   documentList: Array<Document> = [];
+
   tempSub!: Subscription;
   loadingDocument: boolean = true;
   documentState = this.store.select('document');
   authState = this.store.select('auth');
   constructor(public documentSvc: DocumentService, private store: Store<{ auth: AuthState,document:DocumentState}>,
-     private db: Firestore,private route:Router) {
+     private db: Firestore,private route:Router,private dialog:MatDialog) {
 
     this.authState.subscribe((data) => {
       if (data.auth) {
         let userDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', data.auth.userId))
         this.tempSub = collectionChanges(userDocumentQuery).subscribe((data) => {
           if (data != null) {
-            this.documentList = data.map((doc) => {return doc.doc.data() as Document})
+            this.documentList = data.filter((doc) => doc.doc.data()['hide'] == false).map((doc) => {return doc.doc.data() as Document})
             this.loadingDocument = false;
           }
+          if(data.length==0){
+            this.loadingDocument = false;
+            this.documentList = [];
+          }
+
         })
       }
     })
@@ -43,18 +51,7 @@ export class TableComponent {
 
   }
 
-  createDocument() {
-    try {
-      let temp: Subscription = this.authState.subscribe((data) => {
-        if (data.auth?.userId) {
-          this.store.dispatch(DocumentActions.createDocument({ userId: data.auth.userId }));
-        }
-      })
-      temp.unsubscribe();
-    } catch (err) {
 
-    }
-  }
   getDate(timeStamp: any): string {
     let date = new Date(parseInt(timeStamp))
     let hoursFormat = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
@@ -66,5 +63,11 @@ export class TableComponent {
   }
   navigateToDocument(docId:string){
     this.route.navigate(['view/edit/',docId]);
+  }
+  openDialog(){
+    this.dialog.open(AddDocumentComponent)
+  }
+  updateDocStatus(docId:string){
+    this.store.dispatch(DocumentActions.updateDocStatus({docId:docId,docStatus:true}))
   }
 }

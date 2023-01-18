@@ -95,6 +95,26 @@ export const documentReducer = createReducer(
       inProcess: false,
       error: error,
     }
+  }),
+  on(DocumentActions.updateDocStatus, (state) => {
+    return {
+      ...state,
+      inProcess: true,
+      error:'',
+    }
+  }),
+  on(DocumentActions.updateDocStatusSuccess, (state) => {
+    return {
+      ...state,
+      inProcess: false,
+    }
+  }),
+  on(DocumentActions.updateDocStatusFailure, (state, { error }) => {
+    return {
+      ...state,
+      inProcess: false,
+      error: error,
+    }
   })
 
 
