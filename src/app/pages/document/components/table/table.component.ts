@@ -5,7 +5,7 @@ import { DocumentService } from 'src/app/services/document/document.service';
 import { DocumentActions } from 'src/ngrx/actions/document.action';
 import { AuthState } from 'src/ngrx/states/auth.state';
 import { DocumentState } from 'src/ngrx/states/document.state';
-import { collectionChanges, query, collection, where, Firestore, DocumentChange } from '@angular/fire/firestore';
+import { collectionChanges,collectionData, query, collection, where, Firestore, DocumentChange } from '@angular/fire/firestore';
 import { Document } from '../../../../models/document.model'
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -33,14 +33,10 @@ export class TableComponent {
       if (data.auth) {
         this.type = this.acRoute.snapshot.params['type'];
         this.tempSub = this.getDocuments(data.auth, this.type)!.subscribe((data) => {
+
           this.loadingDocument = true;
-          if (data.length > 0 || data != null) {
-            this.documentList = data.map((doc: any) => { return doc.doc.data() as Document })
-            this.loadingDocument = false;
-          } else {
-            this.documentList = [];
-            this.loadingDocument = false;
-          }
+          this.documentList = data.map((doc: any) => { return doc as Document })
+          this.loadingDocument = false;
         })
 
       }
@@ -80,11 +76,11 @@ export class TableComponent {
     switch (type) {
       case 'delete':
         let deletedQuery = query(collection(this.db, 'documents'), where('createdBy', '==', auth.userId), where('hide', '==', true))
-        return collectionChanges(deletedQuery);
+        return collectionData(deletedQuery) as Observable<DocumentChange<Document>[]>;
 
       case 'all':
         let allDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', auth.userId), where('hide', '==', false))
-        return collectionChanges(allDocumentQuery)
+        return collectionData(allDocumentQuery) as Observable<DocumentChange<Document>[]>
       default:
         return
     }
