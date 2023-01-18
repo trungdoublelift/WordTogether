@@ -1,21 +1,30 @@
 <div class="page-header">
   <h1 class="title">Tài liệu của bạn</h1>
 
-  <button mat-mini-fab class="add-button" matTooltip="Thêm tài liệu mới" [matTooltipShowDelay]="500" (click)="openDialog()">
-    <mat-icon >note_add</mat-icon>
+  <button mat-mini-fab class="add-button" matTooltip="Thêm tài liệu mới" [matTooltipShowDelay]="500"
+    (click)="openDialog()">
+    <mat-icon>note_add</mat-icon>
   </button>
 </div>
 <div class="page-content">
   <div class="content-container">
     <!-- <app-error></app-error> -->
-    <app-warning *ngIf="!this.loadingDocument && this.documentList.length==0" [errorType]="{message:'Không có tài liệu nào',icon:'warning'}"></app-warning>
     <app-loading *ngIf="this.loadingDocument" [loadingType]="{message:'Đang tải dữ liệu',type:'not'}"></app-loading>
-    <div class="card-container" *ngFor="let doc of this.documentList"  >
-      <mat-icon (click)="updateDocStatus(doc.docId)" (click)="updateDocStatus(doc.docId)" *ngIf="(this.documentState|async)?.inProcess==false">close</mat-icon>
-      <div class="icon-container" (click)="navigateToDocument(doc.docId)">
+    <div class="card-container" *ngFor="let doc of this.documentList">
+
+      <mat-icon matTooltip="Xoá vĩnh viễn tài liệu" [matTooltipShowDelay]="500" (click)="updateDocStatus(doc.docId)"
+        (click)="updateDocStatus(doc.docId)"
+        *ngIf="(this.documentState|async)?.inProcess==false &&this.type!='delete'">close</mat-icon>
+      <div class="function-container">
+        <mat-icon matTooltip="Xoá vĩnh viễn tài liệu" [matTooltipShowDelay]="500" (click)="removeDoc(doc.docId)"
+          *ngIf="(this.documentState|async)?.inProcess==false &&this.type=='delete'">close</mat-icon>
+        <mat-icon matTooltip="Khôi phục tài liệu" [matTooltipShowDelay]="500" (click)="recoverDoc(doc.docId)"
+          *ngIf="(this.documentState|async)?.inProcess==false &&this.type=='delete'">backup</mat-icon>
+      </div>
+      <div class="icon-container" >
         <img class="document-icon" src="../../../../../assets/doc-icon.png" alt="document icon">
       </div>
-      <div class="detail-container" (click)="navigateToDocument(doc.docId)">
+      <div class="detail-container" >
         <span class="document-detail">{{doc.name}}</span>
         <br>
         <span class="document-detail">Tạo vào {{getDate(doc.createdDate)}}</span>
@@ -23,4 +32,7 @@
     </div>
 
   </div>
+  <app-warning *ngIf="!this.loadingDocument && this.documentList.length==0"
+    [errorType]="{message:'Không có tài liệu nào',icon:'warning'}"></app-warning>
+
 </div>

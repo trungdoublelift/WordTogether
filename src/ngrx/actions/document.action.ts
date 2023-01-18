@@ -6,7 +6,7 @@ export const DocumentActions={
   createDocumentSuccess:createAction('[Document] Create New Document Success',props<{docId:string}>()),
   createDocumentFailure:createAction('[Document] Create New Document Failure',props<{error:string}>()),
 
-  deleteDocument:createAction('[Document] Delete Document',props<{userId:string,docId:string}>()),
+  deleteDocument:createAction('[Document] Delete Document',props<{docId:string}>()),
   deleteDocumentSuccess:createAction('[Document] Delete Document Success'),
   deleteDocumentFailure:createAction('[Document] Delete Document Failure',props<{error:string}>()),
 
@@ -17,7 +17,6 @@ export const DocumentActions={
   updateDocStatus:createAction('[Document] Update Document Status',props<{docId:string,docStatus:boolean}>()),
   updateDocStatusSuccess:createAction('[Document] Update Document Status Success'),
   updateDocStatusFailure:createAction('[Document] Update Document Status Failure',props<{error:string}>()),
-
 
   readDocment:createAction('[Document] Read Document',props<{docId:string}>()),
   readDocumentSuccess:createAction('[Document] Read Document Success',props<{documentString:string}>()),

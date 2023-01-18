@@ -19,8 +19,8 @@ export class DocumentService {
   createDocument(userId: string,docName:string) {
     return this.http.post(this.apiURL + 'create', { userId: userId,docName:docName }) as Observable<string>;
   }
-  deleteDocument(userId:string,docId:string){
-    // return this.http.delete(this.apiURL+'delete',{userId:userId,docId:docId});
+  deleteDocument(docId:string){
+    return this.http.delete(`${this.apiURL}delete?docId=${docId}`) as Observable<any>;
   }
   updateDocStatus(docId:string,status:boolean){
     return this.http.put(this.apiURL+'updateStatus',{docId:docId,status:status}) as Observable<any>;

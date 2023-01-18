@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Xoá vĩnh viễn tài liệu</h2>
+<mat-dialog-content class="mat-typography">
+  <h3>Bạn có muốn xoá vĩnh viễn tài liệu này ?</h3>
+  <p>Sau khi xoá, dữ liệu sẽ <strong>KHÔNG THỂ KHÔI PHỤC</strong></p>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close [disabled]="(this.document$|async)?.inProcess">Huỷ</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="this.deleteDoc()" [disabled]="(this.document$|async)?.inProcess">Xác nhận</button>
+</mat-dialog-actions>

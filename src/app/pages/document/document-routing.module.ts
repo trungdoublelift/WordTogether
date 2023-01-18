@@ -5,7 +5,7 @@ import { TableComponent } from './components/table/table.component';
 import { DocumentComponent } from './document.component';
 
 const routes: Routes = [{ path: '', component: DocumentComponent,children:[
-  {path:'document',component:TableComponent},
+  {path:':type',component:TableComponent},
   {path:'invite',component:InviteListComponent},
 ]}];
 

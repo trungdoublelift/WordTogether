@@ -16,7 +16,7 @@ export class DocumentComponent {
   menuItems=[
     {
       name:"Tài liệu của tôi",
-      link:"/document/document",
+      link:"/document/all",
       icon:"library_books",
     },
     {
@@ -31,7 +31,7 @@ export class DocumentComponent {
     },
     {
       name:"Thùng rác",
-      link:"/document",
+      link:"/document/delete",
       icon:"delete",
     },
     {

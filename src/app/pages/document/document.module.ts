@@ -7,6 +7,7 @@ import { TableComponent } from './components/table/table.component';
 import { ShareModule } from 'src/app/shared/share/share.module';
 import { InviteListComponent } from './components/invite-list/invite-list.component';
 import { AddDocumentComponent } from './components/add-document/add-document.component';
+import { DeleteDocDialogComponent } from './components/delete-doc-dialog/delete-doc-dialog.component';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { AddDocumentComponent } from './components/add-document/add-document.com
     TableComponent,
     InviteListComponent,
     AddDocumentComponent,
+    DeleteDocDialogComponent,
 
   ],
   imports: [

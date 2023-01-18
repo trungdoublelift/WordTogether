@@ -117,6 +117,7 @@ export class EditComponent implements OnInit, OnDestroy {
 
   test(event: any) {
   }
+
   save() {
     let documentValue = this.componentObject.getHtml();
     this.store.dispatch(DocumentActions.saveDocument({ docId: this.docId, documentString: documentValue }))

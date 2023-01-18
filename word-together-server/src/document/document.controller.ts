@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Body, Post, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Body, Post, Delete, Put,Query } from '@nestjs/common';
 import { DocumentService } from './document.service';
 
 @Controller('document')
@@ -55,8 +55,8 @@ export class DocumentController {
 
   }
   @Delete(['delete'])
-  async Delete(@Body() body) {
-    let result = await this.documentService.deleteDocument(body.userId, body.docId)
+  async Delete(@Query('docId') docId:string) {
+    let result = await this.documentService.deleteDocument(docId)
     if (result.success) {
       return {
         status: 200,

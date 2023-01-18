@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DocumentService } from 'src/app/services/document/document.service';
 import { DocumentActions } from 'src/ngrx/actions/document.action';
 import { AuthState } from 'src/ngrx/states/auth.state';
 import { DocumentState } from 'src/ngrx/states/document.state';
-import { collectionChanges, query, collection, where, Firestore } from '@angular/fire/firestore';
+import { collectionChanges, query, collection, where, Firestore, DocumentChange } from '@angular/fire/firestore';
 import { Document } from '../../../../models/document.model'
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDocumentComponent } from '../add-document/add-document.component';
+import { DeleteDocDialogComponent } from '../delete-doc-dialog/delete-doc-dialog.component';
 
 @Component({
   selector: 'app-table',
@@ -20,26 +21,28 @@ export class TableComponent {
   documentList: Array<Document> = [];
 
   tempSub!: Subscription;
-  loadingDocument: boolean = true;
+  loadingDocument: boolean = false;
   documentState = this.store.select('document');
   authState = this.store.select('auth');
-  constructor(public documentSvc: DocumentService, private store: Store<{ auth: AuthState,document:DocumentState}>,
-     private db: Firestore,private route:Router,private dialog:MatDialog) {
+  type: string = "";
+  constructor(public documentSvc: DocumentService, private store: Store<{ auth: AuthState, document: DocumentState }>,
+    private db: Firestore, private route: Router, private dialog: MatDialog, private acRoute: ActivatedRoute) {
+    this.route.routeReuseStrategy.shouldReuseRoute = () => false;
 
     this.authState.subscribe((data) => {
       if (data.auth) {
-        let userDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', data.auth.userId))
-        this.tempSub = collectionChanges(userDocumentQuery).subscribe((data) => {
-          if (data != null) {
-            this.documentList = data.filter((doc) => doc.doc.data()['hide'] == false).map((doc) => {return doc.doc.data() as Document})
+        this.type = this.acRoute.snapshot.params['type'];
+        this.tempSub = this.getDocuments(data.auth, this.type)!.subscribe((data) => {
+          this.loadingDocument = true;
+          if (data.length > 0 || data != null) {
+            this.documentList = data.map((doc: any) => { return doc.doc.data() as Document })
             this.loadingDocument = false;
-          }
-          if(data.length==0){
-            this.loadingDocument = false;
+          } else {
             this.documentList = [];
+            this.loadingDocument = false;
           }
-
         })
+
       }
     })
   }
@@ -61,13 +64,36 @@ export class TableComponent {
     let dateStr = hoursFormat + ":" + minutesFormat + " " + dayFormat + "/" + monthFormat + "/" + date.getFullYear();
     return dateStr
   }
-  navigateToDocument(docId:string){
-    this.route.navigate(['view/edit/',docId]);
+  navigateToDocument(docId: string) {
+    this.route.navigate(['view/edit/', docId]);
   }
-  openDialog(){
+  openDialog() {
     this.dialog.open(AddDocumentComponent)
   }
-  updateDocStatus(docId:string){
-    this.store.dispatch(DocumentActions.updateDocStatus({docId:docId,docStatus:true}))
+  updateDocStatus(docId: string) {
+    this.store.dispatch(DocumentActions.updateDocStatus({ docId: docId, docStatus: true }))
+  }
+  recoverDoc(docId: string) {
+    this.store.dispatch(DocumentActions.updateDocStatus({ docId: docId, docStatus: false }))
+  }
+  getDocuments(auth: any, type: string) {
+    switch (type) {
+      case 'delete':
+        let deletedQuery = query(collection(this.db, 'documents'), where('createdBy', '==', auth.userId), where('hide', '==', true))
+        return collectionChanges(deletedQuery);
+
+      case 'all':
+        let allDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', auth.userId), where('hide', '==', false))
+        return collectionChanges(allDocumentQuery)
+      default:
+        return
+    }
+  }
+  removeDoc(docId: string) {
+    this.dialog.open(DeleteDocDialogComponent, {
+      data: {
+        docId: docId
+      }
+    })
   }
 }

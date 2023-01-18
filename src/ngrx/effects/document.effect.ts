@@ -68,21 +68,26 @@ export class DocumentEffects {
         })
       )
     })
-  // deleteDocument$=createEffect(()=>{
-  //   return this.actions$.pipe(
-  //     ofType(DocumentActions.deleteDocument),
-  //     switchMap((action)=>{
-  //       return from(this.documentSvc.deleteDocument(action.userId,action.docId)).pipe(
-  //         map((result:any)=>{
-  //           return DocumentActions.deleteDocumentSuccess();
-  //         }),
-  //         catchError((error)=>{
-  //           return of(DocumentActions.deleteDocumentFailure({error:error}));
-  //         })
-  //       )
-  //     })
-  //   )
-  // })
+  deleteDocument$=createEffect(()=>{
+    return this.actions$.pipe(
+      ofType(DocumentActions.deleteDocument),
+      switchMap((action)=>{
+        return from(this.documentSvc.deleteDocument(action.docId)).pipe(
+          map((result:any)=>{
+            if(result.success){
+              return DocumentActions.deleteDocumentSuccess();
+            }else{
+              return DocumentActions.deleteDocumentFailure({error:result.error});
+            }
+
+          }),
+          catchError((error)=>{
+            return of(DocumentActions.deleteDocumentFailure({error:error}));
+          })
+        )
+      })
+    )
+  })
   readDocument$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(DocumentActions.readDocment),

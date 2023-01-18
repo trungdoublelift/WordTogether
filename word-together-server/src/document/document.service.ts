@@ -34,20 +34,6 @@ export class DocumentService {
       return { success: false }
     }
   }
-  async deleteDocument(userId: string, docId: string) {
-    try {
-      const doc = (await this.db.collection('documents').doc(docId).get()).data() as Document;
-      if (doc.createdBy === userId) {
-        await this.db.collection('documents').doc(docId).delete();
-        return { success: true }
-      } else {
-        return { success: false, error: "Unauthorize" }
-      }
-
-    } catch (err) {
-      return { success: false, error: err }
-    }
-  }
   async updateRight(userId: string, docId: string, updateUserId: string, right: string) {
     try {
       const doc = (await this.db.collection('documents').doc(docId).get()).data() as Document;
@@ -121,6 +107,23 @@ export class DocumentService {
     }
 
   };
+  async deleteDocument(docId:string){
+    //remove from firestore then remove file from firestorage
+    try{
+      let deleteResult=await this.db.collection('documents').doc(docId).delete();
+        if(deleteResult){
+          const storage = firebase.storage();
+          const file = storage.bucket().file(docId);
+          await file.delete();
+          return {success:true}
+        }else{
+          throw new Error("Không thể xóa file");
+        }
+
+    }catch(err){
+      return {success:false,error:err}
+    }
+  }
 
 
 }
