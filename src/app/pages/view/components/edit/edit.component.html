@@ -1,6 +1,6 @@
 <div class="header-container" *ngIf="this.currentDocumentData">
   <div class="button-container">
-    <button mat-mini-fab class="add-button" matTooltip="Quay lại" [matTooltipShowDelay]="500">
+    <button mat-mini-fab class="add-button" matTooltip="Quay lại" [matTooltipShowDelay]="500" (click)="backNavigate()">
       <mat-icon>arrow_back</mat-icon>
     </button>
   </div>
@@ -30,16 +30,19 @@
 
     </div>
     <div class="bottom-right">
-      <button><mat-icon></mat-icon></button>
+      <!-- <button><mat-icon></mat-icon></button> -->
       <div *ngIf="this.users.length>4">{{this.users.length-4}}</div>
-      <img *ngFor="let user of this.users |slice:0:4" [src]="user.photoURL" alt="user avatar" class="user-avatar">
+      <div  *ngFor="let user of this.users |slice:0:4" [matTooltip]="user.name" [matTooltipShowDelay]="500">
+        <img [src]="user.photoURL" (error)="updateUrl($event)" alt="user avatar" class="user-avatar">
+      </div>
+
     </div>
   </div>
 </div>
 <div class="main-container">
   <div>
     <ejs-richtexteditor [enabled]="this.editable"  #docValue [toolbarSettings]="customToolBar" [value]="(document$|async)?.documentString"
-      (focus)="edit=!edit" (keydown)="edit?onEdit($event):''">
+      (focus)="edit=!edit" (change)="edit?onEdit($event):''">
       <ng-template></ng-template>
     </ejs-richtexteditor>
   </div>

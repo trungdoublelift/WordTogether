@@ -34,10 +34,10 @@ export class DocumentEffects {
       switchMap((action) => {
         return from(this.documentSvc.saveDocument(action.docId, action.documentString)).pipe(
           map((result: any) => {
-            if (result.success) {
+            if (result.status===200) {
               return DocumentActions.saveDocumentSuccess();
             } else {
-              return DocumentActions.saveDocumentFailure({ error: result.error });
+              return DocumentActions.saveDocumentFailure({ error: result.message });
             }
 
           }),

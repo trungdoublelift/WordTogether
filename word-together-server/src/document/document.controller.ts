@@ -39,7 +39,7 @@ export class DocumentController {
     } else {
       return {
         status: 400,
-        message: "Lưu tài liệu thất bại"
+        message: result.error
       }
     }
   }

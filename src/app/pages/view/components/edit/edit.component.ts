@@ -16,7 +16,8 @@ import { Account } from 'src/app/models/account.model';
 import { Document } from 'src/app/models/document.model';
 import { DocumentState } from 'src/ngrx/states/document.state';
 import { DocumentActions } from 'src/ngrx/actions/document.action';
-
+import {Location} from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-edit',
   templateUrl: './edit.component.html',
@@ -50,6 +51,7 @@ export class EditComponent implements OnInit, OnDestroy {
   auth$ = this.store.select('auth');
   constructor(public docService: DocumentService, private fb: Firestore, private AvRoute: ActivatedRoute,
     private accountSvc: AuthService, private store: Store<{ auth: AuthState, document: DocumentState }>,
+    private location:Location,private snackBar:MatSnackBar,
     private http: HttpClient) {
     this.docId = this.AvRoute.snapshot.params['id'];
     this.store.select('auth').subscribe((data) => {
@@ -57,6 +59,11 @@ export class EditComponent implements OnInit, OnDestroy {
         this.currentUser = data.auth;
         this.tempSub = this.docService.getDocument(this.docId).subscribe((data) => {
           this.currentDocumentData = data;
+
+          if (data == null) {
+            this.snackBar.open('Tài liệu đã bị xoá','')
+            this.location.back();
+          }
         })
 
         try {
@@ -79,10 +86,12 @@ export class EditComponent implements OnInit, OnDestroy {
               this.checkFirstLogin = false;
               // Lấy dữ liệu document sau khi lấy xong huỷ lắng nghe
               this.watchDoc = this.getDocumentData(this.docId).subscribe((data: any) => {
-                if (data) {
+                if (data!='') {
                   this.componentObject.value = data;
                   try {
                   } catch (err) { }
+                }else{
+
                 }
               })
               this.saveStatusSub = this.getSaveStatus(this.docId).subscribe((data: any) => {
@@ -122,12 +131,18 @@ export class EditComponent implements OnInit, OnDestroy {
     let documentValue = this.componentObject.getHtml();
     this.store.dispatch(DocumentActions.saveDocument({ docId: this.docId, documentString: documentValue }))
     this.socket.emit('saveDocument', { docId: this.docId });
-    let temp = this.document$.subscribe((data:any) => {
-      if (data.success) {
+    this.editable = false;
+    let temp = this.document$.subscribe((data: any) => {
+
+      if (data.inProcess && data.error == '') {
+
         this.socket.emit('saveDocumentComplete', { docId: this.docId });
         try {
+          this.editable = true;
           temp.unsubscribe();
-        } catch (err) { }
+        } catch (err) {
+          this.editable = true;
+        }
       }
 
     })
@@ -170,11 +185,9 @@ export class EditComponent implements OnInit, OnDestroy {
 
   }
   onEdit(event: any) {
-    if (event.key == 'Enter' || event.key == ' ') {
-      this.socket.emit('sendNewDocumentData', { docId: this.docId, documentString: this.componentObject.getHtml() });
-    } else {
-      return
-    }
+
+    this.socket.emit('sendNewDocumentData', { docId: this.docId, documentString: this.componentObject.getHtml() });
+
   }
   getDate(timeStamp: any): string {
     let date = new Date(parseInt(timeStamp))
@@ -186,4 +199,11 @@ export class EditComponent implements OnInit, OnDestroy {
     return dateStr
   }
 
+  updateUrl(src: any) {
+    (src.target as HTMLImageElement).src = "../../../../assets/pngwing.com.png"
+
+  }
+  backNavigate(){
+    this.location.back();
+  }
 }

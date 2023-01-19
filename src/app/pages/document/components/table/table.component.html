@@ -21,10 +21,10 @@
         <mat-icon matTooltip="Khôi phục tài liệu" [matTooltipShowDelay]="500" (click)="recoverDoc(doc.docId)"
           *ngIf="(this.documentState|async)?.inProcess==false &&this.type=='delete'">backup</mat-icon>
       </div>
-      <div class="icon-container" >
+      <div class="icon-container" (click)="navigateToDocument(doc.docId)" >
         <img class="document-icon" src="../../../../../assets/doc-icon.png" alt="document icon">
       </div>
-      <div class="detail-container" >
+      <div class="detail-container" (click)="navigateToDocument(doc.docId)" >
         <span class="document-detail">{{doc.name}}</span>
         <br>
         <span class="document-detail">Tạo vào {{getDate(doc.createdDate)}}</span>

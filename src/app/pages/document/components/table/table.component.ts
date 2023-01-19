@@ -30,10 +30,9 @@ export class TableComponent {
     this.route.routeReuseStrategy.shouldReuseRoute = () => false;
 
     this.authState.subscribe((data) => {
-      if (data.auth) {
+      if (data.auth!=null) {
         this.type = this.acRoute.snapshot.params['type'];
-        this.tempSub = this.getDocuments(data.auth, this.type)!.subscribe((data) => {
-
+        this.tempSub = this.getDocuments(data.auth, this.type).subscribe((data) => {
           this.loadingDocument = true;
           this.documentList = data.map((doc: any) => { return doc as Document })
           this.loadingDocument = false;
@@ -82,7 +81,7 @@ export class TableComponent {
         let allDocumentQuery = query(collection(this.db, 'documents'), where('createdBy', '==', auth.userId), where('hide', '==', false))
         return collectionData(allDocumentQuery) as Observable<DocumentChange<Document>[]>
       default:
-        return
+        return collectionData(collection(this.db, 'documents')) as Observable<DocumentChange<Document>[]>;
     }
   }
   removeDoc(docId: string) {
